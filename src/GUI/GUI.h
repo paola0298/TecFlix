@@ -22,6 +22,7 @@ protected:
 
     // Child widgets:
     Gtk::Box mainContainer;
+    Gtk::Box tittleContainer;
     Gtk::Box headerContainer;
     Gtk::Box movieContainer;
     Gtk::Box movieContainer1;
@@ -30,6 +31,7 @@ protected:
  
     Gtk::Label option;
     Gtk::Label tittle;
+    Gtk::Label memory;
     Gtk::RadioButton noPaginacionRB, paginacionRB, tradicionalRB, scrollRB;
 
 
