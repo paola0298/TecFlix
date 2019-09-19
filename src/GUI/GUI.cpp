@@ -1,8 +1,10 @@
 #include "GUI.h"
 #include <iostream>
+#include "../Logic/ReadCSV.cpp"
 
 TecFlix::TecFlix():
 option("Seleccione el modo de la aplicacion"),
+memory("Uso de memoria"),
 noPaginacionRB("No paginación"), paginacionRB("Paginacion"),
 tradicionalRB("Paginacion tradicional"), scrollRB("Scroll infinito"),
 tittle("Tec Flix"), mainContainer(Gtk::ORIENTATION_VERTICAL, 0),
@@ -10,7 +12,8 @@ headerContainer(Gtk::ORIENTATION_HORIZONTAL, 0),
 paginationContainer(Gtk::ORIENTATION_HORIZONTAL, 0),
 movieContainer(Gtk::ORIENTATION_VERTICAL, 0),
 movieContainer1(Gtk::ORIENTATION_HORIZONTAL, 0),
-movieContainer2(Gtk::ORIENTATION_HORIZONTAL, 0) {
+movieContainer2(Gtk::ORIENTATION_HORIZONTAL, 0),
+tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
     // This just sets the title of our new window.
     set_title("TecFlix");
 
@@ -21,11 +24,16 @@ movieContainer2(Gtk::ORIENTATION_HORIZONTAL, 0) {
     add(mainContainer);
 
     //main container
-    mainContainer.pack_start(tittle, false, false, 10);
+    mainContainer.pack_start(tittleContainer, false, false, 10);
     mainContainer.pack_start(headerContainer, false, false, 10);
     mainContainer.pack_start(movieContainer, false, false, 10);
     mainContainer.pack_start(paginationContainer, false, false, 10);
 
+    //tittle container
+    tittleContainer.pack_start(tittle, false, false, 400);
+    tittleContainer.pack_start(memory, false, false, 0);
+    // gtk_widget_modify_font(tittle, pango_font_description_from_string("Monospace 50"))
+    
     //header container
     headerContainer.set_size_request(1000, 25);
     headerContainer.set_halign(Gtk::ALIGN_CENTER);
@@ -115,23 +123,15 @@ movieContainer2(Gtk::ORIENTATION_HORIZONTAL, 0) {
     movie1.signal_clicked().connect(sigc::bind<Glib::ustring>(
             sigc::mem_fun(*this, &TecFlix::on_button_clicked), "button 1"));
 
-    // instead of gtk_container_add, we pack this button into the invisible
-    // box, which has been packed into the window.
-    // note that the pack_start default arguments are Gtk::EXPAND | Gtk::FILL, 0
-
-
-    // always remember this step, this tells GTK that our preparation
-    // for this button is complete, and it can be displayed now.
     show_all_children();
 
 }
 
 TecFlix::~TecFlix() { }
 
-// Our new improved signal handler.  The data passed to this method is
-// printed to stdout.
 void TecFlix::on_button_clicked(Glib::ustring data) {
     std::cout << "Hello World - " << data << " was pressed" << std::endl;
+    // read_record(9);
 }
 
 Glib::RefPtr<Gdk::Pixbuf> TecFlix::load_image(std::string path, int width, int height) {
