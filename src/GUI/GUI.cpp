@@ -1,5 +1,6 @@
 #include "GUI.h"
 #include <iostream>
+#include "InfoWindow.cpp"
 #include "../Logic/ReadCSV.cpp"
 
 TecFlix::TecFlix():
@@ -22,6 +23,9 @@ tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
 
     // put the box into the main window.
     add(mainContainer);
+
+    start = 1;
+    end = 10;
 
     //main container
     mainContainer.pack_start(tittleContainer, false, false, 10);
@@ -115,23 +119,26 @@ tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
     //pagination container
     paginationContainer.set_size_request(1000, 10);
 
-    
-
 
     // Now when the button is clicked, we call the "on_button_clicked" function
     // with a pointer to "button 1" as it's argument
     movie1.signal_clicked().connect(sigc::bind<Glib::ustring>(
-            sigc::mem_fun(*this, &TecFlix::on_button_clicked), "button 1"));
+            sigc::mem_fun(*this, &TecFlix::openInfoWindow), "button 1"));
 
     show_all_children();
-
 }
 
 TecFlix::~TecFlix() { }
 
-void TecFlix::on_button_clicked(Glib::ustring data) {
+
+void TecFlix::openInfoWindow(Glib::ustring data) {
     std::cout << "Hello World - " << data << " was pressed" << std::endl;
-    // read_record(9);
+    CSVReader reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/movie_metadata.csv");
+    std::vector<std::string> dataList = reader.getData(start, end);
+    std::vector<std::string> record = reader.getRecord(0, dataList);
+    InfoWindow window;
+    window.set_default_size(1000, 600);
+    window.run(record);
 }
 
 Glib::RefPtr<Gdk::Pixbuf> TecFlix::load_image(std::string path, int width, int height) {

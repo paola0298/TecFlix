@@ -1,27 +1,8 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <iterator>
-#include <string>
-#include <algorithm>
-#include <boost/algorithm/string.hpp>
-#include <vector>
-#include <sstream>
-using namespace std;
+#include "ReadCSV.h"
 
-/*
-* A class to read data from a csv file.
-*/
-class CSVReader {
-    std::string fileName;
-    std::string delimeter;
-    public:
-        CSVReader(std::string filename, std::string delm = ",") : fileName(filename), delimeter(delm)
-        { }
-        // Function to fetch data from a CSV File
-        std::vector<std::string> getData(int start, int end);
-        std::vector<std::string> getRecord(int lineNumber, std::vector<std::string> dataList);
-};
+CSVReader::CSVReader(std::string filename, std::string delm = ",") : fileName(filename), delimeter(delm)
+{}
+    
 /*
 * Parses through csv file line by line and returns the data
 * in vector of strings.
@@ -35,8 +16,11 @@ std::vector<std::string> CSVReader::getData(int start, int end) {
     while (getline(file, line)) {
         // std::vector<std::string> vec;
         // boost::algorithm::split(vec, line, boost::is_any_of(delimeter));
-        if (count>= start && count <= end) 
+        if (count>= start && count <= end) {
+            // cout << "Entering register number " << count << "\n";
+            // cout << line << "\n";
             dataList.push_back(line);
+        }
 
         if (count == end) 
             break;
@@ -63,7 +47,6 @@ std::vector<std::string> CSVReader::getRecord(int lineNumber, std::vector<std::s
 
         // std::cout<<data << ",";
         std::stringstream ss(line);
-        cout <<c<<"\n";
 
         if (c==lineNumber){
             while (getline(ss, word, ',')) { 
@@ -108,11 +91,11 @@ std::vector<std::string> CSVReader::getRecord(int lineNumber, std::vector<std::s
 
 
 
-int main() {
-    // Creating an object of CSVWriter
-    CSVReader reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/movie_metadata.csv");
-    // Get the data from CSV File
-    std::vector<std::string> dataList = reader.getData(1, 10);
-    reader.getRecord(9, dataList);
-    return 0;
-}
+// int main() {
+//     // Creating an object of CSVWriter
+//     CSVReader reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/movie_metadata.csv");
+//     // Get the data from CSV File
+//     std::vector<std::string> dataList = reader.getData(1, 10);
+//     reader.getRecord(9, dataList);
+//     return 0;
+// }

@@ -17,8 +17,11 @@ protected:
 
     // Signal handlers:
     // Our new improved on_button_clicked(). (see below)
-    void on_button_clicked(Glib::ustring data);
+    void openInfoWindow(Glib::ustring data);
     Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
+
+    int start;
+    int end;
 
     // Child widgets:
     Gtk::Box mainContainer;
