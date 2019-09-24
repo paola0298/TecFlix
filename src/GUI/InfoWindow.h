@@ -1,11 +1,11 @@
 #ifndef TAREA_GUI_S
 #define TAREA_GUI_S
 
-// #include <gtkmm-3.0/gtkmm/box.h>
-// #include <gtkmm-3.0/gtkmm/button.h>
-// #include <gtkmm-3.0/gtkmm/window.h>
-// #include <gtkmm-3.0/gtkmm/label.h>
-// #include <gtkmm-3.0/gtkmm/entry.h>
+#include <gtkmm-3.0/gtkmm/box.h>
+#include <gtkmm-3.0/gtkmm/button.h>
+#include <gtkmm-3.0/gtkmm/window.h>
+#include <gtkmm-3.0/gtkmm/label.h>
+#include <gtkmm-3.0/gtkmm/entry.h>
 
 class InfoWindow: public Gtk::Window {
     public:
@@ -13,7 +13,7 @@ class InfoWindow: public Gtk::Window {
         virtual ~InfoWindow();
         int run(std::vector<std::string> record);
 
-    protected:
+    private:
 
         void playTrailer();
         void loadInformation(std::vector<std::string> record);
@@ -27,7 +27,7 @@ class InfoWindow: public Gtk::Window {
         Gtk::Box directorContainer;
         Gtk::Box genresContainer;
         Gtk::Box scoreContainer;
-        Gtk::Box autorsContainer;
+        Gtk::Box actorsContainer;
         Gtk::Box languageContainer;
         Gtk::Box keywordsContainer;
 
@@ -54,8 +54,8 @@ class InfoWindow: public Gtk::Window {
         Gtk::Label genres;
         Gtk::Label genresInfo;
 
-        Gtk::Label autorsNames;
-        Gtk::Label autorsNamesInfo;
+        Gtk::Label actorsNames;
+        Gtk::Label actorsNamesInfo;
 
         Gtk::Label language;
         Gtk::Label languageInfo;

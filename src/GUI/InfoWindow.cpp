@@ -10,7 +10,7 @@ durationContainer(Gtk::ORIENTATION_HORIZONTAL, 0),
 sinopsis("Sinopsis: "), duration("Duracion: "),
 directorName("Director"), genres("Generos: "),
 imdbScore("Puntuacion: "), tittleYear("Anio de lanzamiento: "),
-autorsNames("Nombres de los actores: "), language("Idioma: "),
+actorsNames("Nombres de los actores: "), language("Idioma: "),
 plotKeywords("Palabras clave: ") {
 
     add(mainContainerI);
@@ -41,8 +41,8 @@ plotKeywords("Palabras clave: ") {
     genresContainer.pack_start(genres, false, false, 10);
     genresContainer.pack_start(genresInfo, false, false, 0);
 
-    autorsContainer.pack_start(autorsNames, false, false, 10);
-    autorsContainer.pack_start(autorsNamesInfo, false, false, 0);
+    actorsContainer.pack_start(actorsNames, false, false, 10);
+    actorsContainer.pack_start(actorsNamesInfo, false, false, 0);
 
     languageContainer.pack_start(language, false, false, 10);
     languageContainer.pack_start(languageInfo, false, false, 0);
@@ -52,7 +52,7 @@ plotKeywords("Palabras clave: ") {
 
     rightContainer.pack_start(directorContainer, false, false, 10);
     rightContainer.pack_start(genresContainer, false, false, 10);
-    rightContainer.pack_start(autorsContainer, false, false, 10);
+    rightContainer.pack_start(actorsContainer, false, false, 10);
     rightContainer.pack_start(languageContainer, false, false, 10);
     rightContainer.pack_start(keywordsContainer, false, false, 10);
 
@@ -83,13 +83,13 @@ void InfoWindow::loadInformation(std::vector<std::string> record) {
     // std::string sinopis = record;
     std::string director =  record[1];
     std::string genres = record[9];
-    std::string autor1 =  record[10];
-    std::string autor2 =  record[6];
-    std::string autor3 =  record[14];
+    std::string actor1 =  record[10];
+    std::string actor2 =  record[6];
+    std::string actor3 =  record[14];
     std::string language =  record[19];
     std::string keywords =  record[16];
     std::string url = record[17];
-    std::string autors = autor1 + ", " + autor2 + ", " + autor3;
+    std::string actors = actor1 + ", " + actor2 + ", " + actor3;
     moviePoster = Gtk::Image(
         load_image("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/avengers.jpg", 
         215, 290));
@@ -102,7 +102,7 @@ void InfoWindow::loadInformation(std::vector<std::string> record) {
      durationInfo.set_text(duration);
      directorNameInfo.set_text(director);
      genresInfo.set_text(genres);
-     autorsNamesInfo.set_text(autors);
+     actorsNamesInfo.set_text(actors);
      languageInfo.set_text(language);
      plotKeywordsInfo.set_text(keywords);
 }
