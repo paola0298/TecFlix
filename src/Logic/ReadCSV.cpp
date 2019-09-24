@@ -1,7 +1,7 @@
 #include "ReadCSV.h"
 
-CSVReader::CSVReader(std::string filename, std::string delm = ",") : fileName(filename), delimeter(delm)
-{}
+CSVReader::CSVReader(std::string filename, std::string delm) : 
+fileName(filename), delimeter(delm) {}
     
 /*
 * Parses through csv file line by line and returns the data
@@ -40,10 +40,11 @@ std::vector<std::string> CSVReader::getRecord(int lineNumber, std::vector<std::s
     string word;
     int c = 0;
 
-    cout << "Entering loop...\n";
-    cout <<dataList.size()<<"\n";
+    // cout << "Entering loop...\n";
+    // cout <<dataList.size()<<"\n";
 
     for(std::string line : dataList){
+        // cout << "Loop \n";
 
         // std::cout<<data << ",";
         std::stringstream ss(line);
