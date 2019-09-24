@@ -1,5 +1,4 @@
 #include "GUI.h"
-#include <iostream>
 #include "InfoWindow.cpp"
 #include "../Logic/ReadCSV.cpp"
 
@@ -7,8 +6,8 @@ TecFlix::TecFlix():
 option("Seleccione el modo de la aplicacion"),
 memory("Uso de memoria"),
 noPaginacionRB("No paginación"), paginacionRB("Paginacion"),
-tradicionalRB("Paginacion tradicional"), scrollRB("Scroll infinito"),
-tittle("Tec Flix"), mainContainer(Gtk::ORIENTATION_VERTICAL, 0),
+scrollRB("Scroll infinito"), tittle("Tec Flix"), 
+mainContainer(Gtk::ORIENTATION_VERTICAL, 0),
 headerContainer(Gtk::ORIENTATION_HORIZONTAL, 0),
 paginationContainer(Gtk::ORIENTATION_HORIZONTAL, 0),
 movieContainer(Gtk::ORIENTATION_VERTICAL, 0),
@@ -30,8 +29,8 @@ tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
     //main container
     mainContainer.pack_start(tittleContainer, false, false, 10);
     mainContainer.pack_start(headerContainer, false, false, 10);
-    mainContainer.pack_start(movieContainer, false, false, 10);
-    mainContainer.pack_start(paginationContainer, false, false, 10);
+    mainContainer.pack_start(scrollWindow, false, false, 10);
+    mainContainer.pack_start(paginationContainer, true, true, 10);
 
     //tittle container
     tittleContainer.pack_start(tittle, false, false, 400);
@@ -42,17 +41,18 @@ tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
     headerContainer.set_size_request(1000, 25);
     headerContainer.set_halign(Gtk::ALIGN_CENTER);
     paginacionRB.join_group(noPaginacionRB);
-    tradicionalRB.join_group(noPaginacionRB);
     scrollRB.join_group(noPaginacionRB);
 
     //adding to header container
     headerContainer.pack_start(option, false, false, 10);
     headerContainer.pack_start(noPaginacionRB, false, false, 10);
     headerContainer.pack_start(paginacionRB, false, false, 10);
-    headerContainer.pack_start(tradicionalRB, false, false, 10);
     headerContainer.pack_start(scrollRB, false, false, 10);
 
     //movie container
+    scrollWindow.add(movieContainer);
+    scrollWindow.set_size_request(1000, 565);
+    scrollWindow.set_policy(Gtk::PolicyType::POLICY_NEVER, Gtk::PolicyType::POLICY_NEVER);
     movieContainer.set_size_request(1000, 565);
     movieContainer.pack_start(movieContainer1, false, false, 0);
     movieContainer.pack_start(movieContainer2, false, false, 0);
@@ -118,6 +118,7 @@ tittleContainer(Gtk::ORIENTATION_HORIZONTAL, 0) {
 
     //pagination container
     paginationContainer.set_size_request(1000, 10);
+    
 
 
     // Now when the button is clicked, we call the "on_button_clicked" function

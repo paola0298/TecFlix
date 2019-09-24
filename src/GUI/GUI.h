@@ -6,7 +6,9 @@
 #include <gtkmm-3.0/gtkmm/window.h>
 #include <gtkmm-3.0/gtkmm/label.h>
 #include <gtkmm-3.0/gtkmm/entry.h>
+#include <gtkmm-3.0/gtkmm/scrolledwindow.h>
 #include <gtkmm-3.0/gtkmm/radiobutton.h>
+#include <iostream>
 
 class TecFlix : public Gtk::Window {
 public:
@@ -31,11 +33,12 @@ protected:
     Gtk::Box movieContainer1;
     Gtk::Box movieContainer2;
     Gtk::Box paginationContainer;
+    Gtk::ScrolledWindow scrollWindow;
  
     Gtk::Label option;
     Gtk::Label tittle;
     Gtk::Label memory;
-    Gtk::RadioButton noPaginacionRB, paginacionRB, tradicionalRB, scrollRB;
+    Gtk::RadioButton noPaginacionRB, paginacionRB, scrollRB;
 
 
 
