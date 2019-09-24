@@ -1,19 +1,24 @@
 #include "Node.h"
 
-Node::Node(int val) : value(val) { }
+template<typename T>
+Node<T>::Node(T val) : value(val) { }
 
-int Node::getValue() {
+template<typename T>
+T Node<T>::getValue() {
     return value;
 }
 
-void Node::setValue(int value) {
+template<typename T>
+void Node<T>::setValue(T value) {
     this->value = value;
 }
 
-Node* Node::getNext() {
+template<typename T>
+Node<T>* Node<T>::getNext() {
     return next;
 }
 
-void Node::setNext(Node* next) {
+template<typename T>
+void Node<T>::setNext(Node<T>* next) {
     this->next = next;
 }

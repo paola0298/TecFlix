@@ -5,20 +5,22 @@
 #include <iostream>
 using namespace std;
 
+template<typename T>
+
 class LinkedList {
     private:
-        Node *head;
+        Node<T> *head;
         int size;
 
     public:
-        Node *tail;
+        Node<T> *tail;
         LinkedList();
         int getSize();
-        void insertStart(int value);
-        void insertEnd(int value);
-        int deleteStart();
-        void modify(int value, int index);
-        int getValueAtPos(int index);
+        void insertStart(T value);
+        void insertEnd(T value);
+        T deleteStart();
+        void modify(T value, int index);
+        T getValueAtPos(int index);
         void print();
         string getList();
 };

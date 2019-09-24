@@ -1,17 +1,19 @@
 #ifndef NODE
 #define NODE
 
+template<typename T>
+
 class Node {
     private:
-         int value;
-         Node *next = nullptr;
+         T value;
+         Node<T> *next = nullptr;
         
     public:
-        Node(int value);
-        int getValue();
-        void setValue(int value);
-        Node * getNext();
-        void setNext(Node* next);
+        Node(T value);
+        T getValue();
+        void setValue(T value);
+        Node<T> * getNext();
+        void setNext(Node<T>* next);
 };
 
 #endif

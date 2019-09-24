@@ -1,17 +1,20 @@
 #include "LinkedList.h"
 
-LinkedList::LinkedList(){
+template<typename T>
+LinkedList<T>::LinkedList(){
     size = 0;
     head = nullptr;
     tail = nullptr;
 }
 
-int LinkedList::getSize(){
+template<typename T>
+int LinkedList<T>::getSize(){
     return size;
 }
 
-void LinkedList::insertStart(int value) {
-    Node *temp = new Node(value);
+template<typename T>
+void LinkedList<T>::insertStart(T value) {
+    Node<T> *temp = new Node<T>(value);
     if (size > 0) {
         temp->setNext(head);
     }
@@ -21,18 +24,20 @@ void LinkedList::insertStart(int value) {
     size++;
 }
 
-void LinkedList::insertEnd(int value) {
-    Node *newNode = new Node(value);
+template<typename T>
+void LinkedList<T>::insertEnd(T value) {
+    Node<T> *newNode = new Node<T>(value);
     tail->setNext(newNode);
     tail = newNode;
     size++;
 }
 
-int LinkedList::deleteStart(){
+template<typename T>
+T LinkedList<T>::deleteStart(){
 
     if (size>0){
-        int value = head->getValue();
-        Node *temp = head->getNext();
+        T value = head->getValue();
+        Node<T> *temp = head->getNext();
         delete(head);
         if (size == 1) {
             tail = temp;
@@ -41,14 +46,13 @@ int LinkedList::deleteStart(){
         size--;
         return value;
     }
-    
-
-    return -1;
+    return NULL;
 }
 
-void LinkedList::modify(int value, int index){
+template<typename T>
+void LinkedList<T>::modify(T value, int index){
     if (index >= 0 && index < size){
-        Node *temp = head;
+        Node<T> *temp = head;
         int count = 0;
         while (count<index) {
             temp = temp->getNext();
@@ -58,9 +62,10 @@ void LinkedList::modify(int value, int index){
     }
 }
 
-int LinkedList::getValueAtPos(int index){
+template<typename T>
+T LinkedList<T>::getValueAtPos(int index){
     if (index >= 0 && index < size) {
-        Node *temp = head;
+        Node<T> *temp = head;
         int count = 0;
         while (count<index) {
             temp = temp->getNext();
@@ -68,12 +73,13 @@ int LinkedList::getValueAtPos(int index){
         }
         return temp->getValue();
     } else {
-        return -1;
+        return NULL;
     }
 }
 
-void LinkedList::print(){
-    Node *temp = head;
+template<typename T>
+void LinkedList<T>::print(){
+    Node<T> *temp = head;
     cout << "[";
     for (int i=0; i<size; i++) {
         if (i == size-1){
@@ -87,8 +93,9 @@ void LinkedList::print(){
     cout << "]\n";
 }
 
-string LinkedList::getList(){
-    Node *temp = head;
+template<typename T>
+string LinkedList<T>::getList(){
+    Node<T> *temp = head;
     string list;
     list.append("[");
     // cout << "[";
@@ -112,34 +119,24 @@ string LinkedList::getList(){
 }
 
 // int main(int argc, char *argv[]) { 
-//     LinkedList *list = new LinkedList();
-    
+//     LinkedList<std::string> *list = new LinkedList<std::string>();
 //     list->print();
-
-//     list->insertStart(5);
-//     list->insertStart(9);
-//     list->insertStart(23);
-//     list->insertStart(7);
-//     list->insertStart(1);
+//     list->insertStart("a");
+//     list->insertStart("b");
+//     list->insertStart("c");
+//     list->insertStart("d");
+//     list->insertStart("e");
 //     cout << "tail: " << list->tail->getValue() << "\n";
-//     list->insertEnd(100);
-
+//     list->insertEnd("z");
 //     cout << "tail: " << list->tail->getValue() << "\n";
-
 //     list->print();
-
 //     list->deleteStart();
 //     list->deleteStart();
 //     list->deleteStart();
 //     list->deleteStart();
 //     cout << "tail: " << list->tail->getValue() << "\n";
-
 //     list->print();
-
-//     list->modify(500, 2);
-
+//     list->modify("p", 1);
 //     list->print();
-
 //     cout << "tail: " << list->tail->getValue() << "\n";
-
 // }
