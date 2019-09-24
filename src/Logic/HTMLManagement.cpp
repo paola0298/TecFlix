@@ -109,23 +109,17 @@ std::string HTMLManagement::getTrailerLink(std::string html) {
       std::cout << "Trailer link found\n"<< line << "\n"; 
       trailer++;
     }
-
-    // if (trailer>0) {
-    //   trailer++;
-    // }
   }
   return "";
 }
 
 
 int main(int argc, char *argv[]) {
-    // std::string html = getHTML("http://www.imdb.com/title/tt1170358/");
-    // return 0;
     HTMLManagement html;
     // std::string stringHtml = html.getHTML("http://www.imdb.com/title/tt2395427/?ref_=fn_tt_tt_1");
     std::string stringHtml = html.getHTML("http://www.imdb.com/title/tt1216475/?ref_=fn_tt_tt_1");
     // html.getSummary(stringHtml);
     // html.getPosterLink(stringHtml);
     html.getTrailerLink(stringHtml);
-
+    return 0;
 }
