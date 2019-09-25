@@ -1,4 +1,4 @@
-#include "NoPagination.h"
+#include "NoPagination.hpp"
 
 NoPaginationWindow::NoPaginationWindow() : 
 title("Bienvenido a TecFlix"),

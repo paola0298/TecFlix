@@ -1,4 +1,4 @@
-#include "ReadCSV.h"
+#include "ReadCSV.hpp"
 
 CSVReader::CSVReader(std::string filename, std::string delm) : 
 fileName(filename), delimeter(delm) {}

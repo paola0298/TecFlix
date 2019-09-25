@@ -1,4 +1,4 @@
-#include "Node.h"
+#include "Node.hpp"
 
 template<typename T>
 Node<T>::Node(T val) : value(val) { }

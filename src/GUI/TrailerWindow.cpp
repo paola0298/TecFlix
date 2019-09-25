@@ -1,4 +1,4 @@
-#include "TrailerWindow.h"
+#include "TrailerWindow.hpp"
 
 TrailerWindow::TrailerWindow() {}
 

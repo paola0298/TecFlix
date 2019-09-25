@@ -1,4 +1,4 @@
-#include "InfoWindow.h"
+#include "InfoWindow.hpp"
 
 InfoWindow::InfoWindow():
 mainContainerI(Gtk::ORIENTATION_HORIZONTAL, 0),
