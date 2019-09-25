@@ -7,6 +7,7 @@
 #include <gtkmm-3.0/gtkmm/window.h>
 #include <gtkmm-3.0/gtkmm/application.h>
 #include <iostream>
+#include "NoPagination.cpp"
 using namespace std;
 
 
@@ -14,6 +15,7 @@ class MainWindow : public Gtk::Window {
     public:
         MainWindow();
         virtual ~MainWindow();
+        static void run();
 
     private:
 

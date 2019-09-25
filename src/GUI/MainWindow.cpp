@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "NoPagination.cpp"
+
 
 MainWindow::MainWindow() :
 mainContainer(Gtk::ORIENTATION_HORIZONTAL) {
@@ -52,14 +52,17 @@ void MainWindow::openPaginationWindow() {
 
 void MainWindow::openNoPaginationWindow() {
     cout<<"Opening no Pagination Window...\n";
-    auto app = Gtk::Application::create();
-    NoPaginationWindow noPaginationWin;
-    noPaginationWin.set_default_size(1000,600);
     close();
-    app->run(noPaginationWin);
+    NoPaginationWindow::run();
 }
 
 void MainWindow::openScrollWindow() {
     cout<<"Opening Scroll Window...\n";
     
+}
+
+void MainWindow::run() {
+    auto app = Gtk::Application::create("org.tecflix.main");
+    static MainWindow window;
+    app->run(window);
 }

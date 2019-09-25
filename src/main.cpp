@@ -4,12 +4,13 @@
 
 int main (int argc, char *argv[])
 {
-    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+    gst_init (&argc, &argv);
+    // auto app = Gtk::Application::create();
 
-    MainWindow gui;
-    // gui.set_default_size(1000, 600);
-    
-
-    //Shows the window and returns when it is closed.
-    return app->run(gui);
+    // MainWindow gui;
+    // // gui.set_default_size(1000, 600);
+    // //Shows the window and returns when it is closed.
+    // app->run(gui);
+    MainWindow::run();
+    return 0;
 }

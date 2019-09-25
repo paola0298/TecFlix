@@ -27,8 +27,13 @@ void LinkedList<T>::insertStart(T value) {
 template<typename T>
 void LinkedList<T>::insertEnd(T value) {
     Node<T> *newNode = new Node<T>(value);
-    tail->setNext(newNode);
-    tail = newNode;
+    if (size > 0) {
+        tail->setNext(newNode);
+        tail = newNode;
+    } else {
+        head = newNode;
+        tail = newNode;
+    }
     size++;
 }
 
@@ -72,9 +77,8 @@ T LinkedList<T>::getValueAtPos(int index){
             count++;
         }
         return temp->getValue();
-    } else {
-        return NULL;
     }
+    
 }
 
 template<typename T>

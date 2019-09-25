@@ -1,6 +1,4 @@
 #include "InfoWindow.h"
-#include <iostream>
-
 
 InfoWindow::InfoWindow():
 mainContainerI(Gtk::ORIENTATION_HORIZONTAL, 0),
@@ -33,7 +31,7 @@ plotKeywords("Palabras clave: ") {
     rightContainer.pack_start(durationContainer, false, false, 0);
 
     rightContainer.pack_start(sinopsis, false, false, 0);
-    rightContainer.pack_start(sinopsisInfo, false, false, 0);
+    rightContainer.pack_start(sinopsisInfo, true, true, 0);
 
     directorContainer.pack_start(directorName, false, false, 10);
     directorContainer.pack_start(directorNameInfo, false, false, 0);
@@ -56,8 +54,10 @@ plotKeywords("Palabras clave: ") {
     rightContainer.pack_start(languageContainer, false, false, 10);
     rightContainer.pack_start(keywordsContainer, false, false, 10);
 
+    playButton.signal_clicked().connect(sigc::mem_fun(*this, 
+        &InfoWindow::playTrailer));
     
-
+    sinopsisInfo.set_line_wrap();
     show_all_children();
 }
 
@@ -65,46 +65,34 @@ InfoWindow::~InfoWindow() { }
 
 void InfoWindow::playTrailer() {
     std::cout << "Playing trailer...\n";
+    TrailerWindow::run("https://imdb-video.media-imdb.com/vi1822465049/MV5BY2NlMmJmMmQtMmNjZi00N2VhLWJlZDgtYTZjMjEzYTliNmEwXkExMV5BbXA0XkFpbWRiLWV0cy10cmFuc2NvZGU@.mp4?Expires=1569449713&Signature=uwjxplg-1DB3tkNbYyaVe6cWxixcXGgjK4xFzDNabDZM0gN3~7EYbUKlCMwOedZPBPqIp3uWQwMujaiXUnE0Wz~NgKNeNHC0lwPy4EYdlLTJ5Y~RAsFNIi61lmDsFBd12xTUScou4ZYAOndkh3fSJ6j9XE4wL5-LOascxww6bHiC1ZgdD~kAVFF1ZxL~f782dYvsDC2p8L-CxsHNYrKNjtdreNbU5V9iJLnwMZ7TXL-eXUwTCLoJyryFLUpe7-ArwHec-RMG04dnk9JsjKBe30Pi~H72TY95BEuy65eNlZAiXBMx8NCxD~Ur47~ny~3qUAg1XYhjHt64RvLAvNkB2A__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA");
+
 }
 
-int InfoWindow::run(std::vector<std::string> record) {
+void InfoWindow::run(Movie actualMovie) {
     auto app = Gtk::Application::create();
-    InfoWindow info;
-    info.loadInformation(record);
-    return app->run(info);
+    static InfoWindow infoWin;
+    infoWin.loadInformation(actualMovie);
+    // app->run(infoWin);
+    infoWin.show();
 }
 
-void InfoWindow::loadInformation(std::vector<std::string> record) {
+void InfoWindow::loadInformation(Movie actualMovie) {
     std::cout << "Loading information...\n";
-    std::string movieTitle = record[11]; 
-    std::string year = record[23];
-    std::string score = record[25];
-    std::string duration = record[3];
-    // std::string sinopis = record;
-    std::string director =  record[1];
-    std::string genres = record[9];
-    std::string actor1 =  record[10];
-    std::string actor2 =  record[6];
-    std::string actor3 =  record[14];
-    std::string language =  record[19];
-    std::string keywords =  record[16];
-    std::string url = record[17];
-    std::string actors = actor1 + ", " + actor2 + ", " + actor3;
     moviePoster = Gtk::Image(
-        load_image("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/avengers.jpg", 
-        215, 290));
+        load_image(actualMovie.posterDir, 215, 290));
     playButton.set_image(moviePoster);
-    
 
-     movieTittle.set_text(movieTitle);
-     tittleYearInfo.set_text(year);
-     imdbScoreInfo.set_text(score);
-     durationInfo.set_text(duration);
-     directorNameInfo.set_text(director);
-     genresInfo.set_text(genres);
-     actorsNamesInfo.set_text(actors);
-     languageInfo.set_text(language);
-     plotKeywordsInfo.set_text(keywords);
+     movieTittle.set_text(actualMovie.movieTitle);
+     tittleYearInfo.set_text(actualMovie.year);
+     imdbScoreInfo.set_text(actualMovie.score);
+     durationInfo.set_text(actualMovie.duration);
+     directorNameInfo.set_text(actualMovie.director);
+     genresInfo.set_text(actualMovie.genres);
+     actorsNamesInfo.set_text(actualMovie.actors);
+     languageInfo.set_text(actualMovie.language);
+     plotKeywordsInfo.set_text(actualMovie.keywords);
+     sinopsisInfo.set_text(actualMovie.sinopsis);
 }
 
 Glib::RefPtr<Gdk::Pixbuf> InfoWindow::load_image(std::string path, int width, int height) {

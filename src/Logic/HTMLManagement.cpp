@@ -6,15 +6,15 @@
 HTMLManagement::HTMLManagement() {}
 
 size_t HTMLManagement::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
-    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    ((string*)userp)->append((char*)contents, size * nmemb);
     return size * nmemb;
 }
 
-std::string HTMLManagement::getHTML(std::string url) {
-    std::cout << url << "\n";
+string HTMLManagement::getHTML(string url) {
+    cout << "Url received in getHTML " <<  url << "\n";
     CURL *curl;
     CURLcode result;
-    std::string readBuffer;
+    string readBuffer;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
@@ -23,11 +23,13 @@ std::string HTMLManagement::getHTML(std::string url) {
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
         result = curl_easy_perform(curl);
         //Check for errors
         if (result != CURLE_OK) {
-            std::cout << "failed\n";
-            std::cout << result << "\n";
+            cout << "failed\n";
+            cout << result << "\n";
         }
         curl_easy_cleanup(curl);
 
@@ -37,43 +39,43 @@ std::string HTMLManagement::getHTML(std::string url) {
     return readBuffer;
 }
 
-std::string HTMLManagement::getSummary(std::string html){
-  std::string line;
-  std::stringstream ss(html);
+string HTMLManagement::getSummary(string html){
+  string line;
+  stringstream ss(html);
   bool summary = false;
 
   while (getline(ss, line, '\n')) {
     if (summary) {
-      std::cout << "Summary \n" << line << "\n"; 
+      // std::cout << "Summary \n" << line << "\n"; 
       return line;
     }
 
-    if (line.find("summary_text") != std::string::npos) {
-      std::cout << "Summary line found\n"<< line << "\n"; 
+    if (line.find("summary_text") != string::npos) {
+      // cout << "Summary line found\n"<< line << "\n"; 
       summary = true;
     }
   }
   return "";
 }
 
-std::string HTMLManagement::getPosterLink(std::string html){
-  std::string line;
-  std::stringstream ss(html);
+string HTMLManagement::getPosterLink(string html){
+  string line;
+  stringstream ss(html);
   int poster = 0;
 
   while(getline(ss, line, '\n')) {
     if (poster == 4){
       int posI = line.find_first_of("\"");
       int posF = line.find_last_of("\"");
-      std::cout << "Pos inicial: " << posI << ", Pos final: " << posF << "\n";      
-      std::string link = line.substr(posI+1, posF-5);
-      std::cout << "Line \n" << line << "\n";
-      std::cout << "Poster link.. \n" << link << "\n"; 
-      return line;
+      // cout << "Pos inicial: " << posI << ", Pos final: " << posF << "\n";      
+      string link = line.substr(posI+1, posF-5);
+      // cout << "Line \n" << line << "\n";
+      // cout << "Poster link.. \n" << link << "\n"; 
+      return link;
     }
 
-    if (line.find("poster") != std::string::npos) {
-      std::cout << "Poster line found\n"<< line << "\n"; 
+    if (line.find("div class=\"poster\"") != string::npos) {
+      // cout << "Poster line found\n"<< line << "\n"; 
       poster++;
     }
 
@@ -85,41 +87,92 @@ std::string HTMLManagement::getPosterLink(std::string html){
   return "";
 }
 
-std::string HTMLManagement::getTrailerLink(std::string html) {
-  std::string line;
-  std::stringstream ss(html);
+string HTMLManagement::getTrailerHTML(string html) {
+  string line;
+  stringstream ss(html);
   int trailer = 0;
 
   while (getline(ss, line, '\n')) {
     if (trailer==1) {
-      std::cout << "Trailer link \n" << line << "\n"; 
+      cout << "Trailer link \n" << line << "\n"; 
       int posI = line.find_first_of("\"");
       int posF = line.find_last_of("\"");
-      std::cout << "Pos inicial: " << posI << ", Pos final: " << posF << "\n";      
-      std::string link = line.substr(posI+1, posF-7);
-      std::cout << "Line \n" << line << "\n";
+      // cout << "Pos inicial: " << posI << ", Pos final: " << posF << "\n";      
+      string link = line.substr(posI+1, posF-7);
+      cout << "Line \n" << line << "\n";
       link = "https://www.imdb.com" + link;
-      std::string link1 = link.substr(0, link.size()-1);
-      std::cout << "Trailer link.. \n" << link1 << "\n"; 
-      
-      return link;
+      string link1 = link.substr(0, link.size()-1);
+      cout << "Trailer link.. " << link1 << "\n"; 
+      string htmlTrailer = getHTML(link1);
+      return htmlTrailer;
     }
     
-    if (line.find("class=\"slate\"") != std::string::npos) {
-      std::cout << "Trailer link found\n"<< line << "\n"; 
+    if (line.find("class=\"slate\"") != string::npos) {
+      cout << "Trailer link found\n"<< line << "\n"; 
       trailer++;
     }
   }
   return "";
 }
 
+string HTMLManagement::getTrailerLink(string html) {
+  cout << "Getting trailer html.. \n";
+  string htmlTrailer = getTrailerHTML(html);
+
+  cout << htmlTrailer << "\n";
+
+  if (htmlTrailer!="") {
+    cout << "Trailer of html != \"\"\n";
+    string line;
+    stringstream ss(htmlTrailer);
+    int trailer = 0;
+
+    while (getline(ss, line, '\n')) {
+      if (trailer == 1) {
+        cout << "Trailer link: " << line << "\n";
+        return line;
+      }
+
+      if (line.find("jw-video") != string::npos) {
+        cout << "Trailer link found: " << line << "\n";
+        trailer++;
+      }
+    }
+  }
+  cout << "Trailer html == \"\"";
+  return "";
+}
+
+string HTMLManagement::getPosterPath(string html, string imageN) {
+   string urlPoster = getPosterLink(html);
+   string imageData = getHTML(urlPoster);
+
+   cout << "url poster " << urlPoster << "\n\n";
+
+   ofstream poster;
+  //  string cwd = std::filesystem::current_path(); 
+  //  cout << cwd << "\n";
+  //  poster.open(cwd + "res/Cache/image" + imageN + ".png");
+   poster.open("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/Cache/image" + imageN + ".png");
+   poster << imageData;
+   poster.close();
+
+   string url = "/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/Cache/image" + imageN + ".png";
+   return url;
+}
+
 
 int main(int argc, char *argv[]) {
     HTMLManagement html;
-    // std::string stringHtml = html.getHTML("http://www.imdb.com/title/tt2395427/?ref_=fn_tt_tt_1");
-    std::string stringHtml = html.getHTML("http://www.imdb.com/title/tt1216475/?ref_=fn_tt_tt_1");
-    // html.getSummary(stringHtml);
-    // html.getPosterLink(stringHtml);
-    html.getTrailerLink(stringHtml);
+  
+    // string stringHtml = html.getHTML("http://www.imdb.com/title/tt1216475/?ref_=fn_tt_tt_1");
+    // string stringHtml = html.getHTML("http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1");
+    // cout << stringHtml << "\n";
+    // string htmll = html.getHTML("https://www.imdb.com/video/imdb/vi2376312089?playlistId=tt1345836&ref_=tt_ov_vi");
+    string htmll = html.getHTML("https://www.traileraddict.com/avatar/extended-collectors-edition-trailer");
+   // string posterPath = html.getTrailerLink(stringHtml);
+  
+    cout << htmll << "\n";
+    
     return 0;
 }

@@ -1,22 +1,25 @@
-#ifndef TAREA_GUI_S
-#define TAREA_GUI_S
+#ifndef INFO_WINDOW
+#define INFO_WINDOW
 
 #include <gtkmm-3.0/gtkmm/box.h>
 #include <gtkmm-3.0/gtkmm/button.h>
 #include <gtkmm-3.0/gtkmm/window.h>
 #include <gtkmm-3.0/gtkmm/label.h>
 #include <gtkmm-3.0/gtkmm/entry.h>
+#include <iostream>
+#include "TrailerWindow.cpp"
+// #include "../Logic/Movie.cpp"
 
 class InfoWindow: public Gtk::Window {
     public:
         InfoWindow();
         virtual ~InfoWindow();
-        int run(std::vector<std::string> record);
+        void static run(Movie actualMovie);
 
     private:
 
+        void loadInformation(Movie record);
         void playTrailer();
-        void loadInformation(std::vector<std::string> record);
         Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
         
 
@@ -64,5 +67,5 @@ class InfoWindow: public Gtk::Window {
         Gtk::Label plotKeywordsInfo;
 };
 
-#endif //TAREA_GUI_S
+#endif
 

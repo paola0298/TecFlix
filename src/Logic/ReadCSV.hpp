@@ -21,7 +21,7 @@ class CSVReader {
     public:
         CSVReader(std::string filename, std::string delm = ",");
         // Function to fetch data from a CSV File
-        std::vector<std::string> getData(int start, int end);
+        std::vector<std::string> getData(int start, int end, bool allData = false);
         std::vector<std::string> getRecord(int lineNumber, std::vector<std::string> dataList);
 };
 
