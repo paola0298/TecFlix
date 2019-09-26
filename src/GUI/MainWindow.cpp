@@ -41,12 +41,10 @@ mainContainer(Gtk::ORIENTATION_HORIZONTAL) {
 
 MainWindow::~MainWindow() { }
 
-Glib::RefPtr<Gdk::Pixbuf> MainWindow::load_image(std::string path, int width, int height) {
-    return Gdk::Pixbuf::create_from_file(path, width, height);
-}
-
 void MainWindow::openPaginationWindow() {
     cout<<"Opening Pagination Window...\n";
+    close();
+    PaginationWindow::run();
     
 }
 
@@ -65,4 +63,8 @@ void MainWindow::run() {
     auto app = Gtk::Application::create("org.tecflix.main");
     static MainWindow window;
     app->run(window);
+}
+
+Glib::RefPtr<Gdk::Pixbuf> MainWindow::load_image(std::string path, int width, int height) {
+    return Gdk::Pixbuf::create_from_file(path, width, height);
 }

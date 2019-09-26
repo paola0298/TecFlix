@@ -7,7 +7,10 @@
 #include <gtkmm-3.0/gtkmm/window.h>
 #include <gtkmm-3.0/gtkmm/application.h>
 #include <iostream>
-#include "NoPagination.cpp"
+// #include "NoPagination.cpp"
+#include "Pagination.cpp"
+    
+
 using namespace std;
 
 
@@ -31,8 +34,7 @@ class MainWindow : public Gtk::Window {
         void openPaginationWindow();
         void openNoPaginationWindow();
         void openScrollWindow();
-         Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
-
+        static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
 };
 
 #endif
