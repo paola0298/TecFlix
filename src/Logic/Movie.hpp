@@ -19,6 +19,8 @@ class Movie {
         string keywords;
         string trailerLink;
         string posterDir;
+        int index;
+        string url;
         
         Movie(string title, string yearMovie, string movieScore, string durationMovie,
         string sinopsisMovie, string directorName, string genre,string actorsName,

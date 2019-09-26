@@ -1,5 +1,5 @@
-#ifndef HTML_MANAGEMENT
-#define HTML_MANAGEMENT
+#ifndef _HTML_MANAGEMENT_
+#define _HTML_MANAGEMENT_
 
 #include <iostream>
 #include <curl/curl.h>
