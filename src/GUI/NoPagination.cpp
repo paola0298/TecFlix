@@ -20,15 +20,14 @@ reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos
     upperContainer.pack_start(memoryData, false, false, 0);
 
     // upperContainer.set_size_request(1000, 25);
-
     scrollContainer.add(posterContainer);
     // scrollContainer.set_size_request(1000, 565);
     scrollContainer.set_policy(Gtk::PolicyType::POLICY_NEVER, Gtk::PolicyType::POLICY_AUTOMATIC);
-
     // posterContainer.set_max_children_per_line(5);
     loadData();
     showPosters();
     show_all_children();
+    
 }
 
 NoPaginationWindow::~NoPaginationWindow() { }
@@ -38,9 +37,8 @@ void NoPaginationWindow::loadData() {
     
     vector<string> dataList = reader.getData(0, 0, true);
     cout << "Size of datalist: " << dataList.size() << "\n";
-    // vector<string> record = reader.getRecord(dataList.size()-1, dataList);
 
-    // for (int i=1; i<dataList.size(); i++) {
+    // for (int i=1; i<dataList.size(); i++) { //descomentar linea para cargar todo en memoria
     for (int i=1; i<5; i++) {
         cout << "indice " << i << "\n";
         vector<string> record = reader.getRecord(i, dataList);
@@ -84,9 +82,6 @@ void NoPaginationWindow::showPosters() {
         posterContainer.add(*buttonImage);
         buttonImage->signal_clicked().connect(sigc::bind<Movie>(sigc::mem_fun(*this,
             &NoPaginationWindow::openInfoWindow), actualMovie));
-
-        // buttonImage->signal_clicked().connect(sigc::mem_fun(*this, 
-        //     &NoPaginationWindow::openInfoWindow));
         posterContainer.show_all_children();
     }
 }
@@ -102,6 +97,11 @@ void NoPaginationWindow::run() {
     noPaginationWin.set_default_size(1000,600);
     app->run(noPaginationWin);
 }
+
+void NoPaginationWindow::test() {
+    cout<<"Test\n";
+}
+
 
 Glib::RefPtr<Gdk::Pixbuf> NoPaginationWindow::load_image(std::string path, int width, int height) {
     return Gdk::Pixbuf::create_from_file(path, width, height);

@@ -9,12 +9,11 @@
  #include <gtkmm-3.0/gtkmm/button.h>
  #include <gtkmm-3.0/gtkmm/image.h>
  #include <gtkmm-3.0/gtkmm/application.h>
+ #include <iostream>
  #include "../Logic/ReadCSV.cpp"
- #include "../Logic/Movie.cpp"
  #include "../Structures/LinkedList.cpp"
  #include "../Logic/HTMLManagement.cpp"
  #include "InfoWindow.cpp"
- #include <iostream>
  using namespace std;
 
 class NoPaginationWindow : public Gtk::Window {
@@ -34,10 +33,11 @@ class NoPaginationWindow : public Gtk::Window {
         CSVReader reader;
         LinkedList<Movie> *listOfMovies;
         
+        void test();
         void loadData();
         void showPosters();
         void openInfoWindow(Movie actualMovie);
-        Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
+        static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
 };
 
  #endif
