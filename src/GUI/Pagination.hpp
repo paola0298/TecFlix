@@ -13,11 +13,6 @@
 #include <thread>
 #include <future>
 
-// #include <filesystem>
-// #include <fstream>
-// #define BOOST_NO_CXX11_SCOPED_ENUMS
-// #include <boost/filesystem.hpp>
-// #undef BOOST_NO_CXX11_SCOPED_ENUMS
 using namespace std;
 
 class PaginationWindow : public Gtk::Window {
@@ -27,13 +22,6 @@ class PaginationWindow : public Gtk::Window {
         static void run();
 
     private:
-        int start;
-        int end;
-        int actualPage;
-        int lastPageShow;
-        string actualImagePath;
-        string actualSinopsis;
-        vector<string> dataList;
         Gtk::Box mainContainer;
         Gtk::Box upperContainer;
         Gtk::Box paginationContainer;
@@ -42,24 +30,44 @@ class PaginationWindow : public Gtk::Window {
         Gtk::Label memory;
         Gtk::Label memoryData;
         CSVReader reader;
+
+        int totalPosters = 1;
+        int actualPage = 0;
+        int lastPage = 0;
+        int lastPageShow = 10;
+        string actualImagePath;
+        string actualSinopsis;
+        vector<string> imagePathVector;
+        vector<string> dataList;
+
+
+        void loadData();
+        bool releaseMemory();
+        void downloadData(string html, int index);
+        void loadPages();
+        void showPosters(int page=1);
+        void clearContainer();
+        void addImageToContainer(string imagePath, int index);
+        void downloadImagesThread(int initial);
+        void downloadImages(int initial);
+        static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
+        void openInfoWindow(int initial);
+
+
+
+
+        int startt = 1;
+        int endd = 17;
+        int actualPagee = 1;
+        int *start = &startt;
+        int *end = &endd;        
+        
         // LinkedList<Movie> *listOfMovies;
         vector<Movie> moviesVector;
         vector<string> sinopsisVector;
-        vector<string> imagePathVector;
         vector<Gtk::Image*> widgetButton;
+
         
-        
-        void downloadData(string html, int index);
-        void download(int initial);
-        void releaseMemoryBack();
-        void test();
-        void loadData();
-        void loadPages();
-        void showPosters(int page=1);
-        void openInfoWindow(Movie actualMovie);
-        void clearContainer();
-        void showDataThread(int initial);
-        static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
 };
 
 #endif
