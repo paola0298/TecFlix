@@ -14,11 +14,11 @@ class InfoWindow: public Gtk::Window {
     public:
         InfoWindow();
         virtual ~InfoWindow();
-        static void run(Movie actualMovie);
+        static void run(Movie actualMovie, string path);
 
     private:
 
-        void loadInformation(Movie record);
+        void loadInformation(Movie record, string path);
         void playTrailer();
         static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
         
