@@ -129,7 +129,7 @@ string HTMLManagement::getTrailerLink(string html) {
 string HTMLManagement::getPosterPath(string html, string imageN) {
    string urlPoster = getPosterLink(html);
    string imageData = getHTML(urlPoster);
-   cout << "url poster " << urlPoster << "\n\n";
+  //  cout << "url poster " << urlPoster << "\n\n";
    ofstream poster;
    poster.open("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/Cache/image" + imageN + ".png");
    poster << imageData;

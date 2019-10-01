@@ -15,9 +15,13 @@ std::vector<std::string> CSVReader::getData(int start, int end, bool allData) {
 
     if (!allData) {
         // Iterate through each line and split the content using delimeter
+        // cout << "Start in getData() " << start << "\n";
+        // cout << "End in getData() " << end << "\n";
         while (getline(file, line)) {
+            // cout << "Counter inn getData() " << count << "\n";
             if (count>= start && count <= end) {
                 dataList.push_back(line);
+                // cout << "Datalist size " << dataList.size();
             }
             if (count == end) 
                 break;
