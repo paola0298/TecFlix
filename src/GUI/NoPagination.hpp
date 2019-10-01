@@ -11,7 +11,6 @@
  #include <gtkmm-3.0/gtkmm/application.h>
  #include <iostream>
  #include "../Logic/ReadCSV.cpp"
- #include "../Structures/LinkedList.cpp"
  #include "../Logic/HTMLManagement.cpp"
  #include "InfoWindow.cpp"
  using namespace std;
@@ -31,7 +30,7 @@ class NoPaginationWindow : public Gtk::Window {
         Gtk::Label memory;
         Gtk::Label memoryData;
         CSVReader reader;
-        LinkedList<Movie> *listOfMovies;
+        vector<Movie> listOfMovies;
         
         void test();
         void loadData();

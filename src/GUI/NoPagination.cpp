@@ -7,7 +7,7 @@ upperContainer(Gtk::ORIENTATION_HORIZONTAL),
 memory("Uso de memoria: "), 
 reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/movie_metadata.csv") {
     
-    listOfMovies = new LinkedList<Movie>;
+    
     set_title("TecFlix");
     set_border_width(10);
     add(mainContainer);
@@ -65,15 +65,15 @@ void NoPaginationWindow::loadData() {
         Movie movie(movieTitle, year, score, duration, sinopsis, director, genres, 
         actors, language, keywords, trailerLink, imagePath);
 
-        listOfMovies->insertEnd(movie);
+        listOfMovies.push_back(movie);
     }
 
-    cout << "List size: " << listOfMovies->getSize() << "\n";
+    cout << "List size: " << listOfMovies.size() << "\n";
 }
 
 void NoPaginationWindow::showPosters() {
-    for (int i=0; i<listOfMovies->getSize(); i++) {
-        Movie actualMovie = listOfMovies->getValueAtPos(i); 
+    for (int i=0; i<listOfMovies.size(); i++) {
+        Movie actualMovie = listOfMovies[i]; 
         string imagePath = actualMovie.posterDir;
         Gtk::Button *buttonImage = new Gtk::Button();
         Gtk::Image *imageButton = new Gtk::Image(load_image(imagePath, 215, 290));
@@ -88,7 +88,7 @@ void NoPaginationWindow::showPosters() {
 
 void NoPaginationWindow::openInfoWindow(Movie actualMovie) {
     cout << "Movie Name: " << actualMovie.movieTitle << "\n";
-    InfoWindow::run(actualMovie);
+    InfoWindow::run(actualMovie, "");
 }
 
 void NoPaginationWindow::run() {
