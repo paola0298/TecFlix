@@ -8,7 +8,7 @@
 #include <gtkmm-3.0/gtkmm/application.h>
 #include <iostream>
 // #include "NoPagination.cpp"
-#include "Pagination.cpp"
+#include "PaginationWindow.cpp"
     
 
 using namespace std;
