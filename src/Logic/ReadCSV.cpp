@@ -97,6 +97,36 @@ std::vector<std::string> CSVReader::getRecord(int lineNumber, std::vector<std::s
     return row;
 }
 
+std::vector<Movie> CSVReader::getMovies(int start, int end, bool allData) {
+    std::ifstream file(fileName);
+    std::vector<Movie> movies;
+    std::string line = "";
+    std::string word;
+    int count = 0;
+
+
+    // if (!allData) {
+    //     while (getline(file, line)) {
+    //         if (count >= start && count <= end) {
+    //             std::stringstream ss(line);
+    //             while (getline(ss, word, ',')) {
+
+    //             }
+    //         }
+
+    //         if (count == end) 
+    //             break;
+    //         count++;
+    //     }
+    // } else {
+    //     while (getline(file, line)) {
+
+    //     }
+    // }
+
+    return movies;
+
+}
 
 
 // int main() {

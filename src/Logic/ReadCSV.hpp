@@ -10,6 +10,7 @@
 #include <boost/algorithm/string.hpp>
 #include <vector>
 #include <sstream>
+#include "Movie.cpp"
 using namespace std;
 
 /*
@@ -23,6 +24,7 @@ class CSVReader {
         // Function to fetch data from a CSV File
         std::vector<std::string> getData(int start, int end, bool allData = false);
         std::vector<std::string> getRecord(int lineNumber, std::vector<std::string> dataList);
+        vector<Movie> getMovies(int start, int end, bool allData = false);
 };
 
 #endif
