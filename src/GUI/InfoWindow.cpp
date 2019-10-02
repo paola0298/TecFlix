@@ -69,15 +69,15 @@ void InfoWindow::playTrailer() {
 
 }
 
-void InfoWindow::run(Movie actualMovie, string path) {
+void InfoWindow::run(Movie actualMovie, string path, string summary) {
     auto app = Gtk::Application::create();
     static InfoWindow infoWin;
-    infoWin.loadInformation(actualMovie, path);
+    infoWin.loadInformation(actualMovie, path, summary);
     // app->run(infoWin);
     infoWin.show();
 }
 
-void InfoWindow::loadInformation(Movie actualMovie, string path) {
+void InfoWindow::loadInformation(Movie actualMovie, string path, string summary) {
     // std::cout << "Loading information...\n";
     moviePoster = Gtk::Image(
         load_image(path, 215, 290));
@@ -92,7 +92,7 @@ void InfoWindow::loadInformation(Movie actualMovie, string path) {
      actorsNamesInfo.set_text(actualMovie.actors);
      languageInfo.set_text(actualMovie.language);
      plotKeywordsInfo.set_text(actualMovie.keywords);
-     sinopsisInfo.set_text(actualMovie.sinopsis);
+     sinopsisInfo.set_text(summary);
 }
 
 Glib::RefPtr<Gdk::Pixbuf> InfoWindow::load_image(std::string path, int width, int height) {
