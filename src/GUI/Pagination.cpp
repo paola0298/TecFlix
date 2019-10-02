@@ -22,7 +22,7 @@ reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos
     upperContainer.pack_start(title, false, false, 400);
     upperContainer.pack_start(memory, false, false, 0);
     upperContainer.pack_start(memoryData, false, false, 0);
-
+ 
     upperContainer.set_size_request(1000, 25);
     posterContainer.set_size_request(1000, 565);
     paginationContainer.set_size_request(1000, 10);
@@ -157,6 +157,7 @@ void PaginationWindow::showPosters(int page) {
             actualMovie.posterDir = actualImagePath;
             actualMovie.sinopsis = actualSinopsis;
             imagePathVector.push_back(actualImagePath);
+            
             
             Gtk::Button *buttonImage = new Gtk::Button();
             Gtk::Image *imageButton = new Gtk::Image(load_image(actualImagePath, 215, 290));

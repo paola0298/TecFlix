@@ -24,9 +24,10 @@ reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos
     upperContainer.pack_start(memoryData, false, false, 0);
 
     //settings to containers
+    mainContainer.set_halign(Gtk::ALIGN_CENTER);
     upperContainer.set_size_request(1000, 25);
     posterContainer.set_size_request(1000, 565);
-    paginationContainer.set_size_request(1000, 10);
+    // paginationContainer.set_size_request(1000, 10);
 
     paginationContainer.set_halign(Gtk::ALIGN_CENTER);
 
@@ -83,6 +84,7 @@ bool PaginationWindow::releaseMemory() {
     for (int i=0; i<9; i++) {
         moviesVector.erase(moviesVector.begin()+i);
         imagePathVector.erase(imagePathVector.begin()+i);
+        sinopsisVector.erase(imagePathVector.begin()+i);
     }
 
     std::cout << "Vector movie size after " << moviesVector.size() << "\n";
@@ -101,6 +103,14 @@ void PaginationWindow::downloadData(string html, int index){
 void PaginationWindow::loadPages() {
     // TODO verificar si la pagina actual es la ultima pagina mostrada
     cout << "Loading pages... \n";
+
+    // Gtk::Button *prev = new Gtk::Button();
+    // Gtk::Image *prevImage = new Gtk::Image(load_image("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/prev.png", 15, 15));
+    // prev->set_image(*prevImage);
+    // prev->signal_clicked().connect(sigc::mem_fun(*this, &PaginationWindow::updatePages));
+    // paginationContainer.pack_start(*prev, false, false, 5);
+    // prev->set_child_visible(false);
+
     for (int i=1; i<lastPageShow+1; i++) {
         Gtk::Button *page = new Gtk::Button(to_string(i));
         page->signal_clicked().connect(sigc::bind<int>(
@@ -108,7 +118,31 @@ void PaginationWindow::loadPages() {
         paginationContainer.pack_start(*page, false, false, 5);
     }
 
+    // Gtk::Button *next = new Gtk::Button();
+    // Gtk::Image *nextImage = new Gtk::Image(load_image("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/next.png", 15, 15));
+    // next->set_image(*nextImage);
+    // next->signal_clicked().connect(sigc::mem_fun(*this, &PaginationWindow::updatePages));
+    // paginationContainer.pack_start(*next, false, false, 5);
     paginationContainer.show_all_children();
+}
+
+void PaginationWindow::updatePages() {
+
+    int temp = lastPageShow + 10;
+    lastPageShow++;
+
+    vector<Gtk::Widget*> children = paginationContainer.get_children();
+    int i = 0;
+    for (i; i<children.size()+1; i++) {
+        
+        if (lastPageShow <= temp) {
+            Gtk::Button *child = (Gtk::Button*) children[i];
+            cout << child->get_child_visible() << "\n";
+            child->set_child_visible(true);
+            child->set_label(to_string(lastPageShow));  
+            lastPageShow++;
+        }
+    }
 }
 
 void PaginationWindow::showPosters(int page) {
@@ -138,6 +172,7 @@ void PaginationWindow::showPosters(int page) {
             cout << "Downloading image for movie " << actualMovie.movieTitle << "\n";
             downloadData(htmlData, index);
             imagePathVector.push_back(actualImagePath);
+            sinopsisVector.push_back(actualSinopsis);
             addImageToContainer(actualImagePath, initial);
 
          }
@@ -189,6 +224,7 @@ void PaginationWindow::downloadImages(int initial) {
         string url = actualMovie.url;
         downloadData(htmlM.getHTML(url), actualMovie.index);
         imagePathVector.push_back(actualImagePath);
+        sinopsisVector.push_back(actualSinopsis);
     }
 }
 
@@ -200,7 +236,8 @@ void PaginationWindow::openInfoWindow(int initial) {
     cout << "Opening Information Window...\n";
     Movie actualMovie = moviesVector[initial];
     string path = imagePathVector[initial];
-    InfoWindow::run(actualMovie, path);
+    string summary = sinopsisVector[initial];
+    InfoWindow::run(actualMovie, path, summary);
 }
 
 void PaginationWindow::run() {

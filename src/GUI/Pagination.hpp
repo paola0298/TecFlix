@@ -39,12 +39,14 @@ class PaginationWindow : public Gtk::Window {
         string actualSinopsis;
         vector<string> imagePathVector;
         vector<string> dataList;
+        vector<string> sinopsisVector;
 
 
         void loadData();
         bool releaseMemory();
         void downloadData(string html, int index);
         void loadPages();
+        void updatePages();
         void showPosters(int page=1);
         void clearContainer();
         void addImageToContainer(string imagePath, int index);
@@ -64,7 +66,7 @@ class PaginationWindow : public Gtk::Window {
         
         // LinkedList<Movie> *listOfMovies;
         vector<Movie> moviesVector;
-        vector<string> sinopsisVector;
+        
         vector<Gtk::Image*> widgetButton;
 
         
