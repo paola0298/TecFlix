@@ -13,6 +13,7 @@
  #include "../Logic/ReadCSV.cpp"
  #include "../Logic/HTMLManagement.cpp"
  #include "InfoWindow.cpp"
+ #include <thread>
  using namespace std;
 
 class NoPaginationWindow : public Gtk::Window {
@@ -31,11 +32,24 @@ class NoPaginationWindow : public Gtk::Window {
         Gtk::Label memoryData;
         CSVReader reader;
         vector<Movie> listOfMovies;
+        vector<string> postersVector;
+        vector<string> summaryVector;
+        vector<Gtk::Button*> buttonVector;
+        string actualImagePath;
+        string actualSinopsis;
+
+
+        int lastSize = 0;
+
+        void downloadImages();
         
-        void test();
         void loadData();
         void showPosters();
-        void openInfoWindow(Movie actualMovie);
+        void openInfoWindow(int index);
+        void downloadData(string html, int index);
+        void addImageToContainer(string imagePath, int index);
+        void showImageThread();
+        void downloadImagesThread();
         static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
 };
 
