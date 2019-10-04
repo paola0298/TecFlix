@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 
     pipeline =
       gst_parse_launch
-      ("playbin uri=https://www.youtube.com/watch?v=6ziBFh3V1aM",
+      ("playbin uri=http://es.vid.web.acsta.net//nmedia//34//15//11//25//08//19544154_sd_013.mp4",
       NULL);
 
 
