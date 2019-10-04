@@ -11,7 +11,7 @@
  #include <gtkmm-3.0/gtkmm/application.h>
  #include <iostream>
  #include "../Logic/ReadCSV.cpp"
- #include "../Logic/HTMLManagement.cpp"
+//  #include "../Logic/HTMLManagement.cpp"
  #include "InfoWindow.cpp"
  #include <thread>
  using namespace std;

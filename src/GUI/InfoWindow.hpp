@@ -7,8 +7,9 @@
 #include <gtkmm-3.0/gtkmm/label.h>
 #include <gtkmm-3.0/gtkmm/entry.h>
 #include <iostream>
-// #include "../Logic/Movie.cpp"
-// #include "TrailerWindow.cpp"
+#include "../Logic/Movie.cpp"
+#include "../Logic/HTMLManagement.cpp"
+#include "TrailerWindow.cpp"
 
 class InfoWindow: public Gtk::Window {
     public:
@@ -17,9 +18,8 @@ class InfoWindow: public Gtk::Window {
         static void run(Movie actualMovie, string path, string summary);
 
     private:
-
         void loadInformation(Movie record, string path, string summary);
-        void playTrailer();
+        void playTrailer(string movieName);
         static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
         
 

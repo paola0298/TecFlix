@@ -1,6 +1,8 @@
 #include "Pagination.hpp"
 
-PaginationWindow::~PaginationWindow() { }
+PaginationWindow::~PaginationWindow() {
+    cout << "Window Closed\n";
+ }
 
 PaginationWindow::PaginationWindow() : 
 title("Bienvenido a TecFlix"),
@@ -38,7 +40,7 @@ reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos
 
 
 void PaginationWindow::loadData() {
-    cout << "Loading data... \n";
+    // cout << "Loading data... \n";
     if (actualPage > 2) {
         bool memoryReleased = releaseMemory();
         if (memoryReleased)
@@ -67,7 +69,7 @@ void PaginationWindow::loadData() {
         string url = record[17];
         string actors = actor1 + ", " + actor2 + ", " + actor3;
 
-        cout << "Adding " << movieTitle << ", to list of movies...\n";
+        // cout << "Adding " << movieTitle << ", to list of movies...\n";
         Movie movie(movieTitle, year, score, duration, "", director, genres, 
         actors, language, keywords, "", "");
         movie.index = totalPosters;
@@ -78,23 +80,23 @@ void PaginationWindow::loadData() {
 }
 
 bool PaginationWindow::releaseMemory() {
-    cout << "Freeing memory...\n";
-    std::cout << "Vector movie size before " << moviesVector.size() << "\n";
-    std::cout << "Vector image size before " << imagePathVector.size() << "\n\n";
+    // cout << "Freeing memory...\n";
+    // std::cout << "Vector movie size before " << moviesVector.size() << "\n";
+    // std::cout << "Vector image size before " << imagePathVector.size() << "\n\n";
     for (int i=0; i<9; i++) {
         moviesVector.erase(moviesVector.begin()+i);
         imagePathVector.erase(imagePathVector.begin()+i);
         sinopsisVector.erase(imagePathVector.begin()+i);
     }
 
-    std::cout << "Vector movie size after " << moviesVector.size() << "\n";
-    std::cout << "Vector image size after " << imagePathVector.size() << "\n\n";
+    // std::cout << "Vector movie size after " << moviesVector.size() << "\n";
+    // std::cout << "Vector image size after " << imagePathVector.size() << "\n\n";
 
     return moviesVector.size() == imagePathVector.size();
 }
 
 void PaginationWindow::downloadData(string html, int index){
-    cout << "Downloading image and summary... \n";
+    // cout << "Downloading image and summary... \n";
     HTMLManagement htmlObj;
     actualImagePath = htmlObj.getPosterPath(html, to_string(index));
     actualSinopsis = htmlObj.getSummary(html);
@@ -102,7 +104,7 @@ void PaginationWindow::downloadData(string html, int index){
 
 void PaginationWindow::loadPages() {
     // TODO verificar si la pagina actual es la ultima pagina mostrada
-    cout << "Loading pages... \n";
+    // cout << "Loading pages... \n";
 
     // Gtk::Button *prev = new Gtk::Button();
     // Gtk::Image *prevImage = new Gtk::Image(load_image("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos II/Proyectos programados/TecFlix/res/prev.png", 15, 15));
@@ -137,7 +139,7 @@ void PaginationWindow::updatePages() {
         
         if (lastPageShow <= temp) {
             Gtk::Button *child = (Gtk::Button*) children[i];
-            cout << child->get_child_visible() << "\n";
+            // cout << child->get_child_visible() << "\n";
             child->set_child_visible(true);
             child->set_label(to_string(lastPageShow));  
             lastPageShow++;
@@ -148,7 +150,7 @@ void PaginationWindow::updatePages() {
 void PaginationWindow::showPosters(int page) {
     clearContainer();
     //TODO verificar si pagina presionada es menor que la que estaba antes
-    cout << "Showing posters on window\n";
+    // cout << "Showing posters on window\n";
     lastPage = actualPage;
     actualPage = page;
 
@@ -190,7 +192,7 @@ void PaginationWindow::showPosters(int page) {
 }
 
 void PaginationWindow::clearContainer() {
-    cout << "Cleaning container...\n";
+    // cout << "Cleaning container...\n";
     vector<Gtk::Widget*> children = posterContainer.get_children();
     for (int i = 0; i<children.size(); i++) {
         Gtk::Widget *child = children[i];
@@ -199,7 +201,7 @@ void PaginationWindow::clearContainer() {
 }
 
 void PaginationWindow::addImageToContainer(string imagePath, int index) {
-    cout << "Adding image " << index << " to container...\n";
+    // cout << "Adding image " << index << " to container...\n";
     Gtk::Button *buttonImage = new Gtk::Button();
     Gtk::Image *imageButton = new Gtk::Image(load_image(imagePath, 215, 290));
     buttonImage->set_image(*imageButton);
@@ -211,7 +213,7 @@ void PaginationWindow::addImageToContainer(string imagePath, int index) {
 }
 
 void PaginationWindow::downloadImagesThread(int initial) {
-    cout << "Starting thread...\n";
+    // cout << "Starting thread...\n";
     thread postersThread(&PaginationWindow::downloadImages, this, initial);
     postersThread.detach();
 }
@@ -219,7 +221,7 @@ void PaginationWindow::downloadImagesThread(int initial) {
 void PaginationWindow::downloadImages(int initial) {
     for (initial; initial<moviesVector.size(); initial++) {
         Movie actualMovie = moviesVector[initial]; 
-        cout << "Downloading image in thread of movie " << actualMovie.movieTitle << "...\n";
+        // cout << "Downloading image in thread of movie " << actualMovie.movieTitle << "...\n";
         HTMLManagement htmlM;
         string url = actualMovie.url;
         downloadData(htmlM.getHTML(url), actualMovie.index);
@@ -233,7 +235,6 @@ Glib::RefPtr<Gdk::Pixbuf> PaginationWindow::load_image(std::string path, int wid
 }
 
 void PaginationWindow::openInfoWindow(int initial) {
-    cout << "Opening Information Window...\n";
     Movie actualMovie = moviesVector[initial];
     string path = imagePathVector[initial];
     string summary = sinopsisVector[initial];
