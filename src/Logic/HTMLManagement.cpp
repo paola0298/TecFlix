@@ -96,7 +96,7 @@ std::string HTMLManagement::getTrailerLink(string movieName) {
   movieName = replaceBlank("&", "%26", movieName);
   movieName = replaceBlank(" ", "%20", movieName);
 
-  // cout << "Movie name " << movieName << ".\n";
+  cout << "Movie name " << movieName << ".\n";
   
   string newMovieName = "";
   int movieNameSize = movieName.size();
@@ -110,7 +110,7 @@ std::string HTMLManagement::getTrailerLink(string movieName) {
     }
   }
 
-  // cout << "New movie name " << newMovieName << ".\n";
+  cout << "New movie name " << newMovieName << ".\n";
   
   string principal = "http://www.sensacine.com";
   std::string searchLink = principal +"/busqueda/?q="+ newMovieName;
@@ -130,7 +130,7 @@ std::string HTMLManagement::getTrailerLink(string movieName) {
   if (moviePageLink != "") {
     htmlMovie = getHTML(principal+moviePageLink);
     trailerPage = getTrailerPage(htmlMovie);
-    // cout << "Trailer page " << trailerPage << "\n";
+    cout << "Trailer page " << trailerPage << "\n";
 
   } else {
     return "";  

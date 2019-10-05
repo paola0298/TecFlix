@@ -61,11 +61,12 @@ plotKeywords("Palabras clave: ") {
 InfoWindow::~InfoWindow() { }
 
 void InfoWindow::playTrailer(string movieTitle) {
+        std::cout << "Playing trailer of " << movieTitle << ".\n";
+
     
     HTMLManagement htmlObj;
     string url = htmlObj.getTrailerLink(movieTitle.c_str());
-    // std::cout << "url of trailer: " << url << ".\n";
-    std::cout << "Playing trailer of " << movieTitle << "\n";
+    std::cout << "url of trailer: " << url << ".\n";
     if (url != "") {
         cout << "Playing trailer...\n";
         url = "http://" + url;

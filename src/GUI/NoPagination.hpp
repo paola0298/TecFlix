@@ -10,10 +10,9 @@
  #include <gtkmm-3.0/gtkmm/image.h>
  #include <gtkmm-3.0/gtkmm/application.h>
  #include <iostream>
- #include "../Logic/ReadCSV.cpp"
-//  #include "../Logic/HTMLManagement.cpp"
- #include "InfoWindow.cpp"
  #include <thread>
+ #include "Scroll.cpp"
+ 
  using namespace std;
 
 class NoPaginationWindow : public Gtk::Window {
@@ -41,15 +40,13 @@ class NoPaginationWindow : public Gtk::Window {
 
         int lastSize = 0;
 
-        void downloadImages();
+       
         
         void loadData();
+        void showImageThread();
         void showPosters();
         void openInfoWindow(int index);
-        void downloadData(string html, int index);
-        void addImageToContainer(string imagePath, int index);
-        void showImageThread();
-        void downloadImagesThread();
+     
         static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
 };
 

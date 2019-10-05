@@ -43,19 +43,18 @@ MainWindow::~MainWindow() { }
 
 void MainWindow::openPaginationWindow() {
     cout<<"Opening Pagination Window...\n";
-    close();
     PaginationWindow::run();
     
 }
 
 void MainWindow::openNoPaginationWindow() {
     cout<<"Opening no Pagination Window...\n";
-    close();
     NoPaginationWindow::run();
 }
 
 void MainWindow::openScrollWindow() {
     cout<<"Opening Scroll Window...\n";
+    ScrollWindow::run();
     
 }
 

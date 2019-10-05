@@ -42,18 +42,18 @@ class PaginationWindow : public Gtk::Window {
         vector<string> sinopsisVector;
 
 
+        void loadPages();
+        void showPosters(int page=1);
+        void clearContainer();
         void loadData();
         bool releaseMemory();
         void downloadData(string html, int index);
-        void loadPages();
-        void updatePages();
-        void showPosters(int page=1);
-        void clearContainer();
         void addImageToContainer(string imagePath, int index);
+        void openInfoWindow(int initial);
         void downloadImagesThread(int initial);
         void downloadImages(int initial);
+        void updatePages();
         static Glib::RefPtr<Gdk::Pixbuf> load_image(std::string path, int width, int height);
-        void openInfoWindow(int initial);
 
 
 

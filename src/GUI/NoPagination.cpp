@@ -32,41 +32,6 @@ reader("/home/paola/Documents/II Semestre 2019/Algoritmos y Estructuras de Datos
     
 }
 
-NoPaginationWindow::~NoPaginationWindow() { }
-
-void NoPaginationWindow::showImageThread() {
-    thread showPostersThread(&NoPaginationWindow::showPosters, this);
-    showPostersThread.detach();
-}
-
-void NoPaginationWindow::downloadImagesThread() {
-    thread downloadThread(&NoPaginationWindow::downloadImages, this);
-    downloadThread.detach();
-}
-
-void NoPaginationWindow::downloadImages() {
-    for (int i = 0; i<listOfMovies.size(); i++) {
-        Movie actualMovie = listOfMovies[i]; 
-        // cout << "Getting image of " << actualMovie.movieTitle << "\n";
-
-        HTMLManagement htmlM;
-        // cout << "Getting url \n";
-        string url = actualMovie.url;
-        // downloadData(htmlM.getHTML(url), actualMovie.index);
-        // cout << "Getting html \n";
-        string html = htmlM.getHTML(url);
-        // cout << "Downloading image...\n";
-        actualImagePath = htmlM.getPosterPath(html, to_string(actualMovie.index));
-        // cout << "Image downloaded\n";
-        actualSinopsis = htmlM.getSummary(html);
-        // cout << "Summary \n";
-        // cout << "Adding to vector \n";
-        postersVector.push_back(actualImagePath);
-        summaryVector.push_back(actualSinopsis);
-        // cout << "Image added to vector\n";
-    }
-}
-
 void NoPaginationWindow::loadData() {
     // cout << "Loading data from csv file\n";
     
@@ -89,13 +54,6 @@ void NoPaginationWindow::loadData() {
         string url = record[17];  
         string actors = actor1 + ", " + actor2 + ", " + actor3;
 
-        // HTMLManagement html;
-        // string stringHtml = html.getHTML(url);
-        // string sinopsis = html.getSummary(stringHtml);
-        // string imagePath = html.getPosterPath(stringHtml, to_string(i));
-        // string trailerLink = html.getTrailerLink(stringHtml);
-        // cout << "Adding " << movieTitle << ", to list of movies...\n";
-
         Movie movie(movieTitle, year, score, duration, "", director, genres, 
         actors, language, keywords, "", "");
         movie.index = i;
@@ -109,41 +67,27 @@ void NoPaginationWindow::loadData() {
         buttonImage->signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this,
                 &NoPaginationWindow::openInfoWindow), (i-1)));
         posterContainer.add(*buttonImage);
-
         buttonVector.push_back(buttonImage);
-
     }
-
     posterContainer.show_all_children();
-
     // cout << "List size: " << listOfMovies.size() << "\n";
-
     showImageThread();
 }
 
-void NoPaginationWindow::downloadData(string html, int index) {
-    // cout << "Downloading image in thread of movie...\n";
-    HTMLManagement htmlObj;
-    actualImagePath = htmlObj.getPosterPath(html, to_string(index));
-    // cout << "Image downloaded\n";
-    actualSinopsis = htmlObj.getSummary(html);
-    // cout << "Summary \n";
+void NoPaginationWindow::showImageThread() {
+    thread showPostersThread(&NoPaginationWindow::showPosters, this);
+    showPostersThread.detach();
 }
 
 void NoPaginationWindow::showPosters() {
-    // downloadImagesThread();
 
     int moviesSize = listOfMovies.size();
     int buttonsListSize = buttonVector.size();
 
-    // cout << "Size of list of movies " << moviesSize << "\n";
-    // cout << "Size of list of Buttons " << buttonsListSize << "\n";
-
-    if (moviesSize == buttonsListSize) {
+    if (moviesSize == buttonsListSize) { 
         for (int i = 0; i<moviesSize; i++) {
             Movie actualMovie = listOfMovies[i]; 
             // cout << "Getting image of " << actualMovie.movieTitle << "\n";
-
             HTMLManagement htmlM;
             // cout << "Getting url \n";
             string url = actualMovie.url;
@@ -163,80 +107,16 @@ void NoPaginationWindow::showPosters() {
             Gtk::Image *imageButton = new Gtk::Image(load_image(actualImagePath, 215, 290));
             // cout << "Getting button from vector\n";
             Gtk::Button *actualButton = buttonVector[i];
-            // Gtk::Image *lastImage = (Gtk::Image*) actualButton->get_image();
-            // delete(lastImage);
+
             // cout << "Setting new image to button\n";
             actualButton->set_image(*imageButton);
             // cout << "Image set\n";
         }
     }
-
-    // while (true) {
-    //     int postersVectorSize = postersVector.size();
-       
-    //     if (postersVectorSize == lastSize+1) {
-    //         cout << "Posters vector size " << postersVectorSize << "\n";
-    //         cout << "Last size " << lastSize << "\n";
-    //         int index = postersVectorSize-1;
-    //         cout << "Getting path ... \n";
-    //         string actualPath = postersVector[index];
-    //         cout << "Path " << actualPath << "\n";
-    //         cout << "Getting actual movie\n";
-    //         Movie actual = listOfMovies[index];
-    //         cout << "Actual movie " << actual.movieTitle << "...\n";
-    //         // Gtk::Button *buttonImage = new Gtk::Button();
-    //         Gtk::Image *imageButton = new Gtk::Image(load_image(actualPath, 215, 290));
-    //         buttonImage->set_image(*imageButton);
-    //         cout << "Adding button to container\n";
-    //         // posterContainer.add(*buttonImage);
-    //         // buttonImage->signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this,
-    //             // &NoPaginationWindow::openInfoWindow), index));
-
-    //         // cout << "Showing on window..\n";
-            
-    //         // cout << "Shown..\n";
-    //         lastSize++;
-            
-    //     }
-
-    //     show_all_children();
-        
-    // }
-
-    // for (int i=0; i<8; i++) {
-    //     Movie actualMovie = listOfMovies[i]; 
-    //     string url = actualMovie.url;
-    //     int index = actualMovie.index;
-    //     HTMLManagement htmlObj;
-    //     string htmlData = htmlObj.getHTML(url);
-
-    //     downloadData(htmlData, index);
-    //     postersVector.push_back(actualImagePath);
-    //     summaryVector.push_back(actualSinopsis);
-
-    //     cout << "Actual image path " << actualImagePath << "\n";
-
-    //     addImageToContainer(actualImagePath, i);
-    // }
-
-    // downloadImagesThread();
 }
 
-void NoPaginationWindow::addImageToContainer(string imagePath, int index) {
-    // cout << "Adding image " << index << " to container...\n";
-    Gtk::Button *buttonImage = new Gtk::Button();
-    // cout << "Creating image for button...\n";
-    Gtk::Image *imageButton = new Gtk::Image(load_image(imagePath, 215, 290));
-    // cout << "Setting image to button \n";
-    buttonImage->set_image(*imageButton);
-    // cout << "Adding image to container\n";
-    posterContainer.add(*buttonImage);
-    // cout << "Setting funcionality to button \n";
-    buttonImage->signal_clicked().connect(sigc::bind<int>(sigc::mem_fun(*this,
-        &NoPaginationWindow::openInfoWindow), index));
-    // cout << "Showing children on window\n";
-    posterContainer.show_all_children();
-    // cout << "Children showed...";
+NoPaginationWindow::~NoPaginationWindow() { 
+    close();
 }
 
 void NoPaginationWindow::openInfoWindow(int index) {
